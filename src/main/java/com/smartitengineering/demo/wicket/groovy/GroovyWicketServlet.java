@@ -11,14 +11,14 @@ import org.apache.wicket.protocol.http.WicketServlet;
 public class GroovyWicketServlet
         extends WicketServlet {
 
-  private ClassLoader loader;
-
   @Override
   public void init()
           throws ServletException {
-    loader = new GroovyClassLoader(
-            Thread.currentThread().getContextClassLoader());
+    final ClassLoader parentClassLoader = Thread.currentThread().
+            getContextClassLoader();
+    ClassLoader loader = new GroovyClassLoader(parentClassLoader);
     Thread.currentThread().setContextClassLoader(loader);
     super.init();
+    Thread.currentThread().setContextClassLoader(parentClassLoader);
   }
 }

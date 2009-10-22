@@ -17,6 +17,7 @@ public class GroovyClassLoaderFilter
         implements Filter {
 
   private ClassLoader loader = null;
+  private ClassLoader parentClassLoader = null;
 
   public GroovyClassLoaderFilter() {
   }
@@ -30,10 +31,12 @@ public class GroovyClassLoaderFilter
           throws IOException,
                  ServletException {
     if (loader == null) {
-      loader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader());
+      parentClassLoader = Thread.currentThread().getContextClassLoader();
+      loader = new GroovyClassLoader(parentClassLoader);
     }
     Thread.currentThread().setContextClassLoader(loader);
     chain.doFilter(request, response);
+    Thread.currentThread().setContextClassLoader(parentClassLoader);
   }
 
   public void init(FilterConfig filterConfig)
