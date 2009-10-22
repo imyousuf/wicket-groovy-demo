@@ -17,8 +17,12 @@ public class GroovyWicketServlet
     final ClassLoader parentClassLoader = Thread.currentThread().
             getContextClassLoader();
     ClassLoader loader = new GroovyClassLoader(parentClassLoader);
-    Thread.currentThread().setContextClassLoader(loader);
-    super.init();
-    Thread.currentThread().setContextClassLoader(parentClassLoader);
+    try {
+      Thread.currentThread().setContextClassLoader(loader);
+      super.init();
+    }
+    finally {
+      Thread.currentThread().setContextClassLoader(parentClassLoader);
+    }
   }
 }

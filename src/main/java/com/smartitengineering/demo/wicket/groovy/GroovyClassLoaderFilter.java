@@ -34,9 +34,13 @@ public class GroovyClassLoaderFilter
       parentClassLoader = Thread.currentThread().getContextClassLoader();
       loader = new GroovyClassLoader(parentClassLoader);
     }
-    Thread.currentThread().setContextClassLoader(loader);
-    chain.doFilter(request, response);
-    Thread.currentThread().setContextClassLoader(parentClassLoader);
+    try {
+      Thread.currentThread().setContextClassLoader(loader);
+      chain.doFilter(request, response);
+    }
+    finally {
+      Thread.currentThread().setContextClassLoader(parentClassLoader);
+    }
   }
 
   public void init(FilterConfig filterConfig)
