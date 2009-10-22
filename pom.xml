@@ -8,6 +8,13 @@
   <version>1.0-SNAPSHOT</version>
   <name>wicket-groovy demo webapp</name>
   <url>http://imyousuf-tech.blogs.smartitengineering.com</url>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven.java.net</id>
+      <name>Java.net Maven2 Repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </pluginRepository>
+  </pluginRepositories>
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -73,6 +80,14 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>tomcat-maven-plugin</artifactId>
         <version>1.0-beta-1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.glassfish</groupId>
+        <artifactId>maven-glassfish-plugin</artifactId>
+        <version>1.0-alpha-4</version>
+        <configuration>
+          <httpPort>9090</httpPort>
+        </configuration>
       </plugin>
     </plugins>
     <finalName>wicket-groovy</finalName>
