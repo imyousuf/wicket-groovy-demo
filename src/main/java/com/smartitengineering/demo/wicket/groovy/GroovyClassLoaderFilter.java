@@ -14,10 +14,12 @@ import javax.servlet.ServletResponse;
  * @author imyousuf
  */
 public class GroovyClassLoaderFilter
-        implements Filter {
+    implements Filter {
 
   private ClassLoader loader = null;
   private ClassLoader parentClassLoader = null;
+  private HotReloadableGroovyClassLoader hotClassLoader;
+  private boolean hotLoadEnabled;
 
   public GroovyClassLoaderFilter() {
   }
@@ -28,14 +30,13 @@ public class GroovyClassLoaderFilter
   public void doFilter(ServletRequest request,
                        ServletResponse response,
                        FilterChain chain)
-          throws IOException,
-                 ServletException {
-    if (loader == null) {
+      throws IOException,
+             ServletException {
+    if (parentClassLoader == null) {
       parentClassLoader = Thread.currentThread().getContextClassLoader();
-      loader = new GroovyClassLoader(parentClassLoader);
     }
     try {
-      Thread.currentThread().setContextClassLoader(loader);
+      Thread.currentThread().setContextClassLoader(getClassLoader());
       chain.doFilter(request, response);
     }
     finally {
@@ -43,7 +44,28 @@ public class GroovyClassLoaderFilter
     }
   }
 
+  protected ClassLoader getClassLoader() {
+    if (hotLoadEnabled) {
+      synchronized (this) {
+        if (hotClassLoader == null) {
+          hotClassLoader = new HotReloadableGroovyClassLoader(parentClassLoader);
+        }
+      }
+      return hotClassLoader.getGroovyClassLoader();
+    }
+    else {
+      synchronized (this) {
+        if (loader == null) {
+          loader = new GroovyClassLoader(parentClassLoader);
+        }
+      }
+      return loader;
+    }
+  }
+
   public void init(FilterConfig filterConfig)
-          throws ServletException {
+      throws ServletException {
+    String hotLoad = filterConfig.getInitParameter("hotLoad");
+    hotLoadEnabled = Boolean.parseBoolean(hotLoad);
   }
 }

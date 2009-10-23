@@ -4,6 +4,10 @@
   <filter>
     <filter-name>GroovyClassLoaderFilter</filter-name>
     <filter-class>com.smartitengineering.demo.wicket.groovy.GroovyClassLoaderFilter</filter-class>
+    <init-param>
+      <param-name>hotLoad</param-name>
+      <param-value>true</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>GroovyClassLoaderFilter</filter-name>
