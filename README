@@ -1,7 +1,13 @@
 This is a demo application for Apache Wicket and Groovy integration, with
 support for hot reloading of groovy source codes.
-To get it running on Jetty - mvn jetty:run
 
+To get it running on Jetty - mvn jetty:run
 View the output with - curl http://localhost:7070/wicket-groovy/wicket/
+
+To get it running on Tomcat - mvn tomcat:run
+View the output with - curl http://localhost:8080/wicket-groovy/wicket/
+
+To get it running on GlassFish - mvn glassfish:run
+View the output with - curl http://localhost:9090/wicket-groovy/wicket/
 
 Try plaing with the groovy source files in target/classes folder :).
