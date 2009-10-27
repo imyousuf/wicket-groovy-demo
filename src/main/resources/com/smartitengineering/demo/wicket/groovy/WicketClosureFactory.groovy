@@ -20,7 +20,7 @@ class WicketClosureFactory {
     return getInstance(AjaxLink.class, wicketId, onClickClosure)
   }
 
-  private static Object getInstance(clazz, wicketId, onClickClosure) {
+  static Object getInstance(clazz, wicketId, onClickClosure) {
     Enhancer enhancer = new Enhancer();
     enhancer.setCallback(new AbstractMethodHandler(onClickClosure))
     enhancer.setSuperclass(clazz)

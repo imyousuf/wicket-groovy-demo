@@ -10,4 +10,6 @@ View the output with - curl http://localhost:8080/wicket-groovy/wicket/
 To get it running on GlassFish - mvn glassfish:run
 View the output with - curl http://localhost:9090/wicket-groovy/wicket/
 
-Try plaing with the groovy source files in target/classes folder :).
+Try playing with the groovy source files in target/classes folder :) or simply
+update them from IDE and execute "mvn resources:resources" while the container
+is running and refresh your page.
